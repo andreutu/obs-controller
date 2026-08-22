@@ -1,7 +1,6 @@
 import { Button } from "@workspace/ui/components/button";
 
 export function App() {
-
     async function handleClick() {
         const response = await fetch("/api/health");
         console.log(response);
@@ -14,7 +13,9 @@ export function App() {
                     <h1 className="font-medium">Project ready!</h1>
                     <p>You may now add components and start building.</p>
                     <p>We&apos;ve already added the button component for you.</p>
-                    <Button onClick={handleClick} className="mt-2">Button</Button>
+                    <Button onClick={handleClick} className="mt-2">
+                        Button
+                    </Button>
                 </div>
                 <div className="text-muted-foreground font-mono text-xs">
                     (Press <kbd>d</kbd> to toggle dark mode)

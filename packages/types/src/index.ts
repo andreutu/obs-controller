@@ -1,4 +1,1 @@
-export interface HealthStatus {
-    status: "ok";
-    uptime: number;
-}
+export type * from "./api";

@@ -8,15 +8,14 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     resolve: {
         alias: {
-            "@": path.resolve(__dirname, "./src")
+            "@": path.resolve(import.meta.dirname, "./src")
         }
     },
     server: {
         proxy: {
             "/api": {
                 target: "http://localhost:3000",
-                changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api/, "")
+                changeOrigin: true
             }
         }
     }
