@@ -17,7 +17,7 @@ jobs:
                 fetch-depth: 0
 
             - name: Install zip
-              run: sudo apt install zip
+              run: sudo apt-get update && sudo apt-get install -y zip
 
             - name: Bun setup
               uses: oven-sh/setup-bun@v2
@@ -30,9 +30,10 @@ jobs:
 
             - name: Package files
               run: |
+                  cp LICENSE dist/LICENSE
                   cd dist
-                  zip -r ../obs-controller-linux-x64.zip ./web/ ./obs-controller-linux-x64 ../LICENSE
-                  zip -r ../obs-controller-windows-x64.zip ./web/ ./obs-controller-windows-x64.exe ../LICENSE
+                  zip -r ../obs-controller-linux-x64.zip ./web/ ./obs-controller-linux-x64 ./LICENSE
+                  zip -r ../obs-controller-windows-x64.zip ./web/ ./obs-controller-windows-x64.exe ./LICENSE
                   cd ..
 
             - name: Create release
