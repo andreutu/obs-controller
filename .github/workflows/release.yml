@@ -1,0 +1,45 @@
+name: Build and Release
+
+on:
+    push:
+        tags:
+            - "v*.*.*"
+
+jobs:
+    build-and-release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+
+            - name: Install zip
+              run: sudo apt install zip
+
+            - name: Bun setup
+              uses: oven-sh/setup-bun@v2
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Build
+              run: bun run build
+
+            - name: Package files
+              run: |
+                  cd dist
+                  zip -r ../obs-controller-linux-x64.zip ./web/ ./obs-controller-linux-x64 ../LICENSE
+                  zip -r ../obs-controller-windows-x64.zip ./web/ ./obs-controller-windows-x64.exe ../LICENSE
+                  cd ..
+
+            - name: Create release
+              uses: marvinpinto/action-automatic-releases@v1.2.1
+              with:
+                repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                prerelease: false
+                files: |
+                    obs-controller-linux-x64.zip
+                    obs-controller-windows-x64.zip
