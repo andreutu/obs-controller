@@ -1,4 +1,4 @@
-<h1 align="center">OBS Controller</h1> 
+<h1 align="center">obs-controller</h1> 
 
 A locally run web panel that acts as an OBS controller / stream deck, perfect for phones or tablets.
 
