@@ -1,7 +1,7 @@
 {
     "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
     "files": {
-        "includes": ["**", "!**/dist", "!node_modules", "!.turbo", "!coverage", "!pnpm-lock.yaml", "!.pnpm-store"]
+        "includes": ["**", "!**/dist", "!node_modules", "!.turbo", "!coverage", "!pnpm-lock.yaml", "!.pnpm-store", "!packages/ui/src/components"]
     },
     "formatter": {
         "enabled": true,

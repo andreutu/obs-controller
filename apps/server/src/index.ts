@@ -1,8 +1,10 @@
 import { networkInterfaces } from "node:os";
 import path from "node:path";
 import fastifyStatic from "@fastify/static";
+import fastifyWebsocket from "@fastify/websocket";
 import type { HealthStatus } from "@workspace/types";
 import Fastify from "fastify";
+import settingsRoute from "./routes/settings";
 
 function getLocalAddress(): string | undefined {
     for (const addresses of Object.values(networkInterfaces())) {
@@ -21,6 +23,9 @@ const HOST = process.env.SERVER_HOST ?? "0.0.0.0";
 const server = Fastify({
     logger: !PRODUCTION
 });
+
+await server.register(fastifyWebsocket);
+await server.register(settingsRoute, { prefix: "/api/settings" });
 
 if (PRODUCTION) {
     server.register(fastifyStatic, {
