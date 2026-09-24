@@ -1,14 +1,12 @@
 import type { ObsConnectionSettingsResponse, ObsConnectionSettingsUpdate } from "@workspace/types";
 import type { FastifyInstance } from "fastify/types/instance";
-
-let websocketURL = "ws://127.0.0.1:4455";
-let websocketPassword = "";
+import { settingsStore } from "../store/settings";
 
 async function settingsRoute(fastify: FastifyInstance) {
     fastify.get("/", (): ObsConnectionSettingsResponse => {
         return {
-            url: websocketURL,
-            hasPassword: Boolean(websocketPassword)
+            url: settingsStore.get("url"),
+            hasPassword: Boolean(settingsStore.get("password"))
         };
     });
 
@@ -17,8 +15,8 @@ async function settingsRoute(fastify: FastifyInstance) {
         const url = data.url;
         const password = data.password;
 
-        if (url && typeof url === "string") websocketURL = url;
-        if ((password || password === "") && typeof password === "string") websocketPassword = password;
+        if (url && typeof url === "string") settingsStore.set("url", url);
+        if ((password || password === "") && typeof password === "string") settingsStore.set("password", password);
 
         if (url || password || password === "") return reply.code(200).send();
 

@@ -5,6 +5,7 @@ import fastifyWebsocket from "@fastify/websocket";
 import type { HealthStatus } from "@workspace/types";
 import Fastify from "fastify";
 import settingsRoute from "./routes/settings";
+import obsWebsocket from "./socket";
 
 function getLocalAddress(): string | undefined {
     for (const addresses of Object.values(networkInterfaces())) {
@@ -25,6 +26,7 @@ const server = Fastify({
 });
 
 await server.register(fastifyWebsocket);
+await server.register(obsWebsocket);
 await server.register(settingsRoute, { prefix: "/api/settings" });
 
 if (PRODUCTION) {
